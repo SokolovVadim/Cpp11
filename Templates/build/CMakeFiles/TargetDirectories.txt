@@ -1,3 +1,0 @@
-/home/vadim/Github/Cpp11/Templates/build/CMakeFiles/rebuild_cache.dir
-/home/vadim/Github/Cpp11/Templates/build/CMakeFiles/main.dir
-/home/vadim/Github/Cpp11/Templates/build/CMakeFiles/edit_cache.dir
