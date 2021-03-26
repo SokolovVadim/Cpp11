@@ -4,4 +4,5 @@ set (CMAKE_CXX_STANDARD 11)
 
 project(main)
 add_executable(main main.cpp)
+add_compile_options(-Wall)
 target_include_directories(main PUBLIC ./)
