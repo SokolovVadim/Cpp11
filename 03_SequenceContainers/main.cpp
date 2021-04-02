@@ -1,46 +1,31 @@
-# Sequence Containers
+#include <iostream>
 
-## Sequence Containers (Array and Linked List)
+// STL headers
 
- - vector
- - deque
- - list
- - forward list
- - array
-
-## Associative Containers (binary tree)
-
- - set, multiset
- - map, multimap
-
-## Unordered Containers (hash table)
-
- - Unordered set / multiset
- - Unordered map / multimap
-
-### STL Headers
-
-```
 #include <vector>
 #include <deque>
 #include <list>
-#include <set>
-#include <map>
-#include <unordered_set>
-#include <unordered_map>
-#include <iterator>
+#include <array>
 #include <algorithm>
-#include <numeric>
-#include <functional>
-```
 
-## Vector
+std::vector<int> test_vector();
+void test_containers(std::vector<int>& vec);
+void test_deque();
+void test_list();
+void test_array();
 
-[][][][][]->
+int main()
+{
+	// std::vector<int> vec = test_vector();
+	// test_containers(vec);*/
+	// test_deque();
+	// test_list();
+	test_array();
+	return 0;
+}
 
-Vector is a dynamicly allocated contiguous array that grows in one direction in memory  
-
-```
+std::vector<int> test_vector()
+{
 	std::vector<int> vec; // vec.size() == 0
 	std::cout << vec.size() << std::endl;
 	vec.push_back(4);
@@ -75,24 +60,11 @@ Vector is a dynamicly allocated contiguous array that grows in one direction in 
 	for(auto it: vec)
 		std::cout << it << " ";
 	std::cout << std::endl;
-```
+	return vec;
+}
 
-The output is:  
-
-```
-0
-3
-8
-8
-4 1 8 
-4 1 8 
-4 1 8 
-4 1 6 
-```
-
-### Common functions for all the STL containers
-
-```
+void test_containers(std::vector<int>& vec)
+{
 	// common member functions of all containers
 	if(!vec.empty())
 		std::cout << "vector is not empty\n";
@@ -107,7 +79,7 @@ The output is:
 	std::cout << "size after clear(): " << vec.size() << std::endl;
 	// vecCopy becomes empty, vec.size() == 3
 	vecCopy.swap(vec);
-	
+
 	std::cout << "after swap:\nvec: ";
 	for(auto it: vec)
 		std::cout << it << " ";
@@ -116,32 +88,10 @@ The output is:
 	for(auto it: vecCopy)
 		std::cout << it << " ";
 	std::cout << std::endl;
-```
+}
 
-The output is:  
-
-```
-vector is not empty
-size: 3
-copy size: 3
-size after clear(): 0
-after swap:
-vec: 4 1 6 
-vecCopy: 
-```
-
-No penalty of abstraction, very efficient  
-
-Properties of Vector:
-1. fast insert/remove at the end O(1)
-2. slow insert/remove at the beginning or in the middle: O(n)
-3. slow search: O(n)
-
-## Deque
-
-<- [][][][][][] ->  
-
-```
+void test_deque()
+{
 	std::deque<int> deq = {31, 12, 1999};
 
 	for(auto it: deq)
@@ -154,28 +104,12 @@ Properties of Vector:
 	for(auto it: deq)
 		std::cout << it << " ";
 	std::cout << std::endl;
-```
 
-The output is:  
+	std::cout << deq[2] << std::endl;
+}
 
-```
-31 12 1999 
-1 31 12 1999 2
-12
-```
-
-Properties of deque:  
-
-1. fast insert/remove at the beginning and at the end
-2. slow insert/remove in the middle: O(n)
-3. slow search: O(n)
-
-## List
-
-[]->[]->[]->[]
-[]<-[]<-[]<-[]
-
-```
+void test_list()
+{
 	std::list<int> myList = {9, 1, 1};
 	myList.push_back(12);
 	myList.push_front(3);
@@ -201,30 +135,7 @@ Properties of deque:
 	for(auto it: myList)
 		std::cout << it << " ";
 	std::cout << std::endl;
-```
 
-The output is:  
-
-```
-3 9 1 1 12 
-value 9
-after insert:
-3 8 9 1 1 12 
-after erase:
-3 8 9 1 12 
-```
-
-Properties of list:  
-
-1. fast insert/remove at any place: O(1)
-2. slow search: O(n)
-3. no random access, no [] operator.
-
-Search is slower than vector because of locality of vector and more cache hits.
-
-Splice is a very useful operation!
-
-```
 	itr = myList.begin();
 	itr++;
 
@@ -238,30 +149,10 @@ Splice is a very useful operation!
 	for(auto it: listSplice)
 		std::cout << it << " ";
 	std::cout << "\n";
-```
+}
 
-The output is:
-
-```
-after splice:
-myList: 3 
-listSplice: 8 9 1 12 
-```
-
-## Forward List
-
-[]->[]->[]->[]
-
-Only one link between leafs
-
-## Array
-
-Limitations of Array:  
-
-1. size can not be changed
-2. two arrays of integers may be arrays of different type
-
-```
+void test_array()
+{
 	std::array<int, 3> arr = {3, 4, 5};
 	std::array<int, 3>::iterator itr = arr.begin();
 	std::cout << "begin: " << *itr << std::endl;
@@ -273,13 +164,4 @@ Limitations of Array:
 	std::cout << "size: " << arr.size() << std::endl;
 	if(!arr.empty())
 		std::cout << "array is not empty!\n";
-```
-
-The output:  
-
-```
-begin: 3
-end: 5
-size: 3
-array is not empty!
-```
+}
