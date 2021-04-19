@@ -61,5 +61,86 @@ Hash collision leads to a performance degradation. For instance, in the worst ca
 
 ### Associative array - map and unordered map
 
+```
+	std::unordered_map<char, std::string> day = {{'S', "Sunday"}, {'M', "Monday"}};
+	std::cout << day['S'] << std::endl;    // No range check
+	std::cout << day.at('M') << std::endl; // Has range check
 
+	std::vector<int> vec = {1, 2, 3};
+	vec[5] = 5; // error
 
+	day['W'] = "Wednesday"; // Inserting {'W', "Wednesday"}
+	day.insert(std::make_pair('F', "Friday")); // Inserting {'F', "Friday"}
+
+	std::pair<std::unordered_map<char, std::string>::iterator, bool> ret;
+	ret = day.insert(std::make_pair('M', "MONDAY")); // fail to modify
+	if(ret.second == false)
+	{
+		std::cout << "insert failed!\n";
+	}
+
+	std::cout << day['M'] << std::endl;
+	day['M'] = "MONDAY";
+	std::cout << day['M'] << std::endl;
+```
+
+The output is:  
+
+```
+Sunday
+Monday
+insert failed!
+Monday
+MONDAY
+```
+
+The subscriiption `operator[]` provides a write access to the container.  
+
+```
+void foo(const std::unordered_map<char, std::string>& m)
+{
+	// m['S'] = "Sunday";
+	// std::cout << m['S'] << std::endl;
+	auto itr = m.find('S');
+	if(itr != m.end())
+		std::cout << itr->second << std::endl;
+}
+
+// .......
+
+	foo(day);
+```
+
+m has a `const` qualifier so it can not use `operator[]`  
+
+### Notes about assosiative array  
+
+1. Search time: unordered_map, O(1); map, O(log(n))  
+2. Unordered_map may degrade to O(n)  
+3. Can not use multimap and unordered_multimap, they do not have `operator[]`  
+
+### Container Adaptor
+
+- Provide a restricted interface to meet special needs  
+- Implemented with fundamental container classes  
+
+1. stack: LIFO, push(), pop(), top()  
+2. queue: FIFO, push(), pop(), front(), back()  
+3. priority queue: first item always has the greatest priority, push(), pop(), top()  
+
+### Another way of categorizing containers:
+
+1. Array based containers: vector, deque  
+2. Node base containers: list + associative containers + unordered containers  
+
+Array based containers invalidate pointers:  
+- Native pointers, iterators, references
+
+```
+	std::vector<int> vec = {1, 2, 3, 4};
+	int* p = &vec[2]; // points to 3
+	vec.insert(vec.begin(), 0);
+	std::cout << *p << std::endl; // ?
+```
+
+The last string leads to undefined behaviour.

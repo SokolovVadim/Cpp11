@@ -2,14 +2,18 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <vector>
+#include <string>
 
 void test_undordered_set();
 void test_undordered_map();
+void foo(const std::unordered_map<char, std::string>& m);
+void test_array_based_containers();
 
 int main()
 {
 	// test_undordered_set();
-	test_undordered_map();
+	// test_undordered_map();
+	test_array_based_containers();
 	return 0;
 }
 
@@ -56,4 +60,22 @@ void test_undordered_map()
 	std::cout << day['M'] << std::endl;
 	day['M'] = "MONDAY";
 	std::cout << day['M'] << std::endl;
+	foo(day);
+}
+
+void foo(const std::unordered_map<char, std::string>& m)
+{
+	// m['S'] = "Sunday";
+	// std::cout << m['S'] << std::endl;
+	auto itr = m.find('S');
+	if(itr != m.end())
+		std::cout << itr->second << std::endl;
+}
+
+void test_array_based_containers()
+{
+	std::vector<int> vec = {1, 2, 3, 4};
+	int* p = &vec[2]; // points to 3
+	vec.insert(vec.begin(), 0);
+	std::cout << *p << std::endl; // ?
 }
